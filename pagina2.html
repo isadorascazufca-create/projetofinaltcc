@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCC - Como a Forma se Forma</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://use.typekit.net/sdm6dmo.css">
+    
+<style>
+        body {
+            /* Fonte "galix-mono" */
+            font-family: "galix-mono", sans-serif; 
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="%23e76225"/></svg>'), auto;
+        }
+
+        /* ===== CURSOR DE LOSANGO PARA HOVER ===== */
+        .header-link:hover {
+             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
+        }
+
+        /* Animação "wobble" */
+        @keyframes wobble {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+        }
+        .wobbling {
+            animation: wobble 0.3s ease-in-out;
+        }
+
+        /* ===== CSS CUSTOMIZADO PARA A RÉGUA (SLIDER) ===== */
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 2px; 
+            background: #e0e0e0;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #e76225;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -1,5px; 
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #e76225;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 0;
+        }
+
+        input[type="range"]::-moz-range-track {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 4px;
+        }
+
+        /* ===== ESTILO DA BARRA DE ROLAGEM (SCROLLBAR) ===== */
+        #control-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+        #control-panel::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        #control-panel::-webkit-scrollbar-thumb {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+        #control-panel::-webkit-scrollbar-thumb:hover {
+            background: #c7c7c7;
+        }
+
+        /* Cursor especial para o botão [escutar] */
+        #info-popup-play-button:hover {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
+        }
+        
+        /* Cursor de losango para o trigger (classe) */
+        .accordion-trigger:hover {
+             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
+        }
+
+        /* Estilos da seta (classe) */
+        .accordion-arrow {
+            display: inline-block; 
+            transition: transform 0.2s ease-in-out;
+        }
+        .arrow-rotated {
+            transform: rotate(180deg);
+        }
+
+    </style>
+</head>
+<body class="bg-white text-[#e76225]">
+
+<header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2 lg:px-24 lg:pt-8 lg:pb-4">
+    <nav class="container mx-auto grid grid-cols-2 items-center 
+                lg:flex lg:justify-between lg:items-baseline">
+    
+        <a href="pagina3.html" 
+           class="header-link flex flex-row items-center space-x-2 justify-self-start col-span-1 mt-0 
+                  transition-transform duration-300 hover:scale-105 origin-center lg:mt-0">
+            
+            <p class="text-[15px] lg:text-2xl xl:text-2xl font-normal text-[#e76225] whitespace-nowrap">
+               paisagens sonoras
+            </p>
+            <span class="text-[15px] lg:text-3xl xl:text-3xl font-normal cursor-pointer text-[#e76225] inline-block whitespace-nowrap lg:relative lg:top-0.5">
+               +
+            </span>
+        </a>
+            
+        <a href="pagina2.html" 
+           class="header-link text-[15px] lg:text-2xl xl:text-2xl font-bold cursor-pointer text-[#e76225] inline-block scale-105 origin-center whitespace-nowrap 
+                  justify-self-end col-span-1 mt-0 lg:mt-0">
+           como a forma se forma
+        </a>
+
+    </nav>
+</header>
+<main class="flex flex-col-reverse lg:flex-row-reverse pt-20 lg:pt-32 relative h-screen lg:h-[calc(100vh-128px)]">
+    
+    <div id="control-panel" class="w-full h-1/2 lg:w-1/4 lg:h-full overflow-y-auto p-6 pb-16 lg:mr-14">
+
+        <div class="mb-8">
+            <label for="explorer-select" class="block text-lg lg:text-xl font-normal mb-3 text-[#e76225]">vocalizações parque augusta</label>
+            <select id="explorer-select" class="w-full p-1 border border-[#e0e0e0] rounded-md bg-white text-[#e76225] focus:outline-none focus:ring-2 focus:ring-[#e76225]">
+                <option value="">selecione um pássaro...</option>
+            </select>
+        </div>
+
+        <div id="info-popup-container" 
+     class="hidden flex items-center p-3 mt-4 mb-6 w-full border-2 border-gray-200 rounded-lg 
+            lg:fixed lg:z-40 lg:bottom-12 lg:left-16 lg:right-auto lg:w-auto lg:mt-0 lg:mb-0 lg:border-none lg:rounded-none">
+    
+    <div class="flex-shrink-0">
+        <img id="info-popup-image" src="" alt="Imagem do pássaro" class="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-gray-100">
+    </div>
+    
+    <div class="ml-3 flex-1 min-w-0">
+        <p id="info-popup-play-button" class="font-normal text-xl lg:text-2xl text-[#e76225] select-none">
+            ▶
+        </p>
+        <p id="info-popup-name" class="font-bold text-base lg:text-base text-[#e76225]">
+            </p>
+        <p id="info-popup-scientific" class="italic text-sm lg:text-sm text-[#e76225]">
+            </p>
+    </div>
+</div>
+
+        <h3 class="text-lg lg:text-xl font-medium mb-4 text-[#e76225]">tempo</h3>
+        
+        <div class="mb-6">
+            <div id="trigger-tempo1" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="tempo1" class="text-sm lg:text-base font-normal text-[#e76225]">duração total</label>
+                <span id="arrow-tempo1" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-tempo1" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>É o tempo total do canto, medido desde o início da primeira sílaba até o final da última sílaba.</p>
+            </div>
+            <input type="range" id="tempo1" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-tempo1" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        <div class="mb-6">
+            <div id="trigger-tempo2" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="tempo2" class="text-sm lg:text-base font-normal text-[#e76225]">duração médias das sílabas</label>
+                <span id="arrow-tempo2" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-tempo2" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>A média de duração de cada sílaba individual (calculada como: tempo de término da sílaba - tempo de início da sílaba).</p>
+            </div>
+            <input type="range" id="tempo2" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-tempo2" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        <h3 class="text-lg lg:text-xl font-medium mt-8 mb-4 text-[#e76225]">propriedades</h3>
+
+        <div class="mb-6">
+            <div id="trigger-som1" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="som1" class="text-sm lg:text-base font-normal text-[#e76225]">frequência média</label>
+                <span id="arrow-som1" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-som1" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>A média da frequência média de cada sílaba.</p>
+            </div>
+            <input type="range" id="som1" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-som1" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+        
+        <div class="mb-6">
+            <div id="trigger-som2" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="som2" class="text-sm lg:text-base font-nromal text-[#e76225]">tempo de silêncio</label>
+                <span id="arrow-som2" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-som2" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>A média de tempo das pausas (silêncios) que ocorrem entre o final de uma sílaba e o início da sílaba seguinte.</p>
+            </div>
+            <input type="range" id="som2" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-som2" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        <div class="mb-6">
+            <div id="trigger-som3" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="som3" class="text-sm lg:text-base font-normal text-[#e76225]">ritmo</label>
+                <span id="arrow-som3" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-som3" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>O número total de sílabas dividido pela duração total do canto.</p>
+            </div>
+            <input type="range" id="som3" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-som3" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        <div class="mb-6">
+            <div id="trigger-som4" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="som4" class="text-sm lg:text-base font-normal text-[#e76225]">frequência máxima</label>
+                <span id="arrow-som4" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-som4" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>A frequência mais alta (máxima) atingida em qualquer sílaba dentro do canto.</p>
+            </div>
+            <input type="range" id="som4" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-som4" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        <div class="mb-6">
+            <div id="trigger-som5" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="som5" class="text-sm lg:text-base font-normal text-[#e76225]">variação da frequência</label>
+                <span id="arrow-som5" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-som5" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>A média da "variação de frequência" de cada sílaba (calculada como: frequência máxima da sílaba - frequência mínima da sílaba).</p>
+            </div>
+            <input type="range" id="som5" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-som5" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        <h3 class="text-lg lg:text-xl font-medium mt-8 mb-4 text-[#e76225]">complexidade</h3>
+
+        <div class="mb-6">
+            <div id="trigger-complex1" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="complex1" class="text-sm lg:text-base font-normal text-[#e76225]">quantidade de sílabas únicas</label>
+                <span id="arrow-complex1" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-complex1" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>O número de sílabas únicas (distintas) encontradas no padrão de sintaxe do canto.</p>
+            </div>
+            <input type="range" id="complex1" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-complex1" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        <div class="mb-6">
+            <div id="trigger-complex2" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="complex2" class="text-sm lg:text-base font-normal text-[#e76225]">sílabas seguidas</label>
+                <span id="arrow-complex2" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-complex2" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>Mede a repetição sequencial. É o número de sílabas que são seguidas por uma sílaba idêntica, dividido pelo (número total de sílabas - 1).</p>
+            </div>
+            <input type="range" id="complex2" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-complex2" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        <div class="mb-6">
+            <div id="trigger-complex3" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
+                <label for="complex3" class="text-sm lg:text-base font-normal text-[#e76225]">quantidade total de sílabas</label>
+                <span id="arrow-complex3" class="text-base lg:text-lg font-normal text-[#e76225] ml-4 accordion-arrow"> ▼ </span>
+            </div>
+            <div id="content-complex3" class="hidden mt-2 text-xs lg:text-sm text-[#e76225]">
+                <p>O número total de sílabas (contado pelo número de "onsets" ou inícios de sílaba) em um canto.</p>
+            </div>
+            <input type="range" id="complex3" min="0" max="100" value="50" class="w-full mt-2">
+            <span id="valor-complex3" class="text-xs lg:text-sm text-[#e76225]">50</span>
+        </div>
+
+        
+    </div> 
+    
+    <div id="svg-container" class="w-full h-1/2 lg:w-3/4 lg:h-full p-8 flex items-center justify-center lg:mt-8 mb-4 lg:mb-0" style="isolation: isolate;">
+
+        <svg id="svg-principal" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 363.51 363.51" class="w-3/4 h-auto lg:w-1/2">
+
+          <path id="circulo-1" class="hidden" d="M182.11,288.22l-106.81-106.81,106.11-106.11,106.81,106.81-106.11,106.11ZM181.76,323.49l141.73-141.73L181.76,40.03,40.03,181.76l141.73,141.73Z" fill="#ffe9b3"/>
+          <path id="circulo-2" class="hidden" d="M182.57,253.31l-72.36-72.36,70.74-70.74,72.36,72.36-70.74,70.74h0ZM181.76,323.49l141.73-141.73L181.76,40.03,40.03,181.76l141.73,141.73Z" fill="#ffe9b3"/>
+          <rect id="circulo-3" x="81.54" y="81.54" width="200.44" height="200.44" transform="translate(-75.29 181.76) rotate(-45)" fill="#ffe9b3"/>
+
+          <g id="p1-container" style="mix-blend-mode: multiply;"></g>
+          <g id="p2-container" style="mix-blend-mode: multiply;"></g>
+
+          <rect id="forma-central-rect" x="145.93" y="145.93" width="71.65" height="71.65" transform="translate(-75.29 181.76) rotate(-45)" fill="#e6b00f"/>
+
+        </svg>
+
+    </div>
+
+</main>
+
+
+<a href="pagina4.html"
+   class="header-link fixed z-50 bottom-8 right-8 w-10 h-10 text-xl lg:w-12 lg:h-12 lg:text-2xl bg-white border-2 border-[#e76225] rounded-full flex items-center justify-center font-bold text-[#e76225] transition-transform hover:scale-110">
+   ?
+</a>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- PALETAS E CONSTANTES ---
+        const PALETA_CENTRAL = ["#e6b00f","#ffc20e","#ffde2f","#ffeb96","#ccc9e3","#9893c6","#766fb3","#544ba0"];
+        const PALETA_P1 = ["#ff5003","#fd7702","#ff8e00","#ffa881","#67b3e2","#4c8cc5","#4361bb","#1a2270"];
+        const PALETA_P2 = ["#e25296","#e8739e","#eba1b1","#f1c4d6","#c8e899","#b1ce6f","#89a559","#647c43"];
+
+        // --- MAPEAMENTO DE SLIDERS ---
+        const MAP_CONFIG = {
+            'tempo1': { min: 197, max: 13645, unit: '(ms)', decimals: 0 },
+            'tempo2': { min: 49, max: 1680, unit: '(ms)', decimals: 0 },
+            'som1': { min: 731, max: 22050, unit: '(Hz)', decimals: 0 },
+            'som2': { min: 17, max: 4302, unit: '(ms)', decimals: 0 },
+            'som3': { min: 0.0002, max: 0.0152, unit: '(1/ms)', decimals: 4 },
+            'som4': { min: 731, max: 22050, unit: '(Hz)', decimals: 0 },
+            'som5': { min: 215, max: 15678, unit: '(Hz)', decimals: 0 },
+            'complex1': { min: 1, max: 16, unit: '(únicas)', decimals: 0 },
+            'complex2': { min: 0.0, max: 1.0, unit: '(taxa)', decimals: 2 },
+            'complex3': { min: 2, max: 44, unit: '(sílabas)', decimals: 0 }
+        };
+        
+        // --- BANCO DE DADOS ---
+        const BANCO_DE_DADOS_PASSAROS = [
+            { nome: "Papagaio-verdadeiro", audioSrc: "sound/Amazona_aestiva-2578_denoise.wav", imageSrc: "imageB/amazona_aestiva.jpeg", scientificName: "Amazona aestiva", params: { tempo1: 2954.0, tempo2: 307.9270, som1: 6035.0877, som2: 70.0833, som3: 0.0027, som4: 6970.7602, som5: 4953.2163, complex1: 3, complex2: 0.4285, complex3: 8 } },
+            { nome: "Periquito-verde", audioSrc: "sound/Brotogeris_tirica-344085_denoise.wav", imageSrc: "imageB/Brotogeris_tirica.jpeg", scientificName: "Brotogeris tirica", params: { tempo1: 1360.0, tempo2: 303.5714, som1: 7221.0526, som2: 48.5714, som3: 0.0029, som4: 8467.5438, som5: 5523.2456, complex1: 4, complex2: 0.0, complex3: 4 } },
+            { nome: "Carcará", audioSrc: "sound/Caracara_plancus-302883_denoise.wav", imageSrc: "imageB/Carcara_plancus.jpeg", scientificName: "Carcara plancus", params: { tempo1: 1600.0, tempo2: 125.6507, som1: 7435.9649, som2: 242.9365, som3: 0.0031, som4: 8510.5263, som5: 6584.9122, complex1: 1, complex2: 1.0, complex3: 5 } },
+            { nome: "Pica-pau-de-cabeça-amarela", audioSrc: "sound/Celeus_flavescens-37499_denoise.wav", imageSrc: "imageB/Celeus_flavescens.jpg", scientificName: "Celeus flavescens", params: { tempo1: 1525.125, tempo2: 204.05, som1: 5988.3040, som2: 126.2187, som3: 0.0032, som4: 7298.2456, som5: 4410.1364, complex1: 2, complex2: 0.75, complex3: 5 } },
+            { nome: "Cambacica", audioSrc: "sound/Coereba_flaveola-1004775_denoise.wav", imageSrc: "imageB/Coereba_flaveola.jpeg", scientificName: "Coereba flaveola", params: { tempo1: 1851.4285, tempo2: 115.5844, som1: 5845.6140, som2: 58.0, som3: 0.0059, som4: 9885.9649, som5: 3696.4912, complex1: 4, complex2: 0.6, complex3: 11 } },
+            { nome: "Rolinha-cinzenta", audioSrc: "sound/Columbina_passerina-1432770 (1)_denoise.wav", imageSrc: "imageB/Columbina_passerina.jpeg", scientificName: "Columbina passerina", params: { tempo1: 3815.2380, tempo2: 452.9251, som1: 22050.0, som2: 107.4603, som3: 0.0018, som4: 22050.0, som5: 10843.8596, complex1: 4, complex2: 0.0, complex3: 7 } },
+            { nome: "Urubu-de-cabeça-preta", audioSrc: "sound/Coragyps_atratus-78686_denoise.wav", imageSrc: "imageB/Coragyps_atratus.jpeg", scientificName: "Coragyps atratus", params: { tempo1: 6712.6984, tempo2: 912.1693, som1: 10401.7543, som2: 1988.0952, som3: 0.0004, som4: 10917.5438, som5: 9327.1929, complex1: 2, complex2: 0.0, complex3: 3 } },
+            { nome: "Pitiguari", audioSrc: "sound/Cyclarhis_gujanensis-116709 (1)_denoise.wav", imageSrc: "imageB/Cyclarhis_gujanensis.jpeg", scientificName: "Cyclarhis gujanensis", params: { tempo1: 8292.0634, tempo2: 619.8095, som1: 8467.5438, som2: 1298.2539, som3: 0.0006, som4: 9928.9473, som5: 6696.6666, complex1: 3, complex2: 0.5, complex3: 5 } },
+            { nome: "Beija-flor-tesoura", audioSrc: "sound/Eupetomena_macroura-2173635 (1)_denoise.wav", imageSrc: "imageB/Eupetomena_macroura.jpg", scientificName: "Eupetomena macroura", params: { tempo1: 5720.0, tempo2: 83.6904, som1: 11261.4035, som2: 161.3664, som3: 0.0041, som4: 12292.9824, som5: 9239.4371, complex1: 2, complex2: 0.9130, complex3: 24 } },
+            { nome: "Tuim", audioSrc: "sound/Forpus_xanthopterygius-7208_denoise.wav", imageSrc: "imageB/Forpus_xanthopterygius.jpeg", scientificName: "Forpus xanthopterygius", params: { tempo1: 1043.8095, tempo2: 165.9259, som1: 6769.7368, som2: 273.0158, som3: 0.0028, som4: 7865.7894, som5: 5415.7894, complex1: 1, complex2: 1.0, complex3: 3 } },
+            { nome: "João-de-barro", audioSrc: "sound/Furnarius_rufus-2825424_denoise.wav", imageSrc: "imageB/Furnarius_rufus.jpeg", scientificName: "Furnarius rufus", params: { tempo1: 2982.8571, tempo2: 48.6537, som1: 7006.1403, som2: 64.2002, som3: 0.0090, som4: 8252.6315, som5: 5175.4061, complex1: 1, complex2: 1.0, complex3: 27 } },
+            { nome: "Corujinha-do-mato", audioSrc: "sound/Megascops_choliba-579040_denoise.wav", imageSrc: "imageB/Megascops_choliba.jpeg", scientificName: "Megascops choliba", params: { tempo1: 13644.7619, tempo2: 1680.4232, som1: 12980.7017, som2: 4301.7460, som3: 0.0002, som4: 12980.7017, som5: 9599.4152, complex1: 1, complex2: 1.0, complex3: 3 } },
+            { nome: "Bentevizinho-de-penacho-vermelho", audioSrc: "sound/Myiozetetes_similis-2139493_denoise.wav", imageSrc: "imageB/Myiozetetes_similis.jpeg", scientificName: "Myiozetetes similis", params: { tempo1: 5537.4603, tempo2: 343.3333, som1: 11390.3508, som2: 1388.0423, som3: 0.0007, som4: 12679.8245, som5: 10691.8859, complex1: 1, complex2: 1.0, complex3: 4 } },
+            { nome: "Pardal-doméstico", audioSrc: "sound/Passer_domesticus-200351_denoise.wav", imageSrc: "imageB/Passer_domesticus.jpeg", scientificName: "Passer domesticus", params: { tempo1: 2973.3333, tempo2: 283.0952, som1: 18783.3333, som2: 613.6507, som3: 0.0013, som4: 20674.5614, som5: 15677.8508, complex1: 1, complex2: 1.0, complex3: 4 } },
+            { nome: "Alma-de-gato", audioSrc: "sound/Piaya_cayana-190305_denoise.wav", imageSrc: "imageB/Piaya_cayana.jpeg", scientificName: "Piaya cayana", params: { tempo1: 2211.7083, tempo2: 318.0138, som1: 10479.5321, som2: 628.8333, som3: 0.0013, som4: 11321.6374, som5: 10417.1539, complex1: 1, complex2: 1.0, complex3: 3 } },
+            { nome: "Bem-te-vi", audioSrc: "sound/Pitangus_sulphuratus-2017090_denoise.wav", imageSrc: "imageB/Pitangus_sulphuratus.jpg", scientificName: "Pitangus sulphuratus", params: { tempo1: 2793.6507, tempo2: 436.3809, som1: 10917.5438, som2: 152.9365, som3: 0.0017, som4: 11949.1228, som5: 9559.2982, complex1: 4, complex2: 0.25, complex3: 5 } },
+            { nome: "Periquitão-maracanã", audioSrc: "sound/Psittacara_leucophthalmus-187809_denoise.wav", imageSrc: "imageB/Psittacara_leucophthalmus.jpeg", scientificName: "Psittacara leucophthalmus", params: { tempo1: 3510.7936, tempo2: 195.1322, som1: 8424.5614, som2: 106.2914, som3: 0.0034, som4: 9413.1578, som5: 6329.1666, complex1: 4, complex2: 0.6363, complex3: 12 } },
+            { nome: "Saíra-amarela", audioSrc: "sound/Stilpnia_cayana-86150_denoise.wav", imageSrc: "imageB/Stilpnia_cayana.jpeg", scientificName: "Stilpnia cayana", params: { tempo1: 9254.6031, tempo2: 189.0404, som1: 8381.5789, som2: 21.7866, som3: 0.0047, som4: 9928.9473, som5: 5672.7073, complex1: 16, complex2: 0.1395, complex3: 44 } },
+            { nome: "Sanhaçu-verde", audioSrc: "sound/Thraupis_palmarum-209744_denoise.wav", imageSrc: "imageB/Thraupis_palmarum.jpeg", scientificName: "Thraupis palmarum", params: { tempo1: 6571.7460, tempo2: 800.7539, som1: 9542.1052, som2: 23.6734, som3: 0.0012, som4: 11089.4736, som5: 5501.7543, complex1: 8, complex2: 0.0, complex3: 8 } },
+            { nome: "Sanhaçu-cinzento", audioSrc: "sound/Thraupis_sayaca-43298_denoise.wav", imageSrc: "imageB/Thraupis_sayaca.jpg", scientificName: "Thraupis sayaca", params: { tempo1: 6557.1428, tempo2: 916.2811, som1: 11519.2982, som2: 23.8624, som3: 0.0010, som4: 12378.9473, som5: 9769.2982, complex1: 5, complex2: 0.1666, complex3: 7 } },
+            { nome: "Ferreirinho-relógio", audioSrc: "sound/Todirostrum_cinereum-45722 (1)_denoise.wav", imageSrc: "imageB/Todirostrum_cinereum.jpeg", scientificName: "Todirostrum cinereum", params: { tempo1: 197.1666, tempo2: 54.6388, som1: 3228.0701, som2: 16.625, som3: 0.0152, som4: 5052.6315, som5: 1341.1306, complex1: 1, complex2: 1.0, complex3: 3 } },
+            { nome: "Corruíra", audioSrc: "sound/Troglodytes_musculus-48966_denoise.wav", imageSrc: "imageB/Troglodytes_musculus.jpeg", scientificName: "Troglodytes musculus", params: { tempo1: 1484.4444, tempo2: 726.3492, som1: 6339.9122, som2: 31.7460, som3: 0.0013, som4: 7371.4912, som5: 4244.5175, complex1: 2, complex2: 0.0, complex3: 2 } },
+            { nome: "Sabiá-poca", audioSrc: "sound/Turdus_amaurochalinus-49337_denoise.wav", imageSrc: "imageB/Turdus_amaurochalinus.jpg", scientificName: "Turdus amaurochalinus", params: { tempo1: 8307.25, tempo2: 249.9, som1: 2393.7621, som2: 325.625, som3: 0.0018, som4: 3633.5282, som5: 1236.6471, complex1: 5, complex2: 0.2142, complex3: 15 } },
+            { nome: "Sabiá-laranjeira", audioSrc: "sound/Turdus_rufiventris-59269_denoise.wav", imageSrc: "imageB/Turdus_rufiventris.jpg", scientificName: "Turdus rufiventris", params: { tempo1: 5962.2222, tempo2: 382.1541, som1: 8166.6666, som2: 47.0818, som3: 0.0023, som4: 9585.0877, som5: 5130.2631, complex1: 4, complex2: 0.1538, complex3: 14 } },
+            { nome: "Suiriri-tropical", audioSrc: "sound/Tyrannus_melancholicus-98693_denoise.wav", imageSrc: "imageB/Tyrannus_melancholicus.jpeg", scientificName: "Tyrannus melancholicus", params: { tempo1: 8245.0793, tempo2: 412.2045, som1: 12292.9824, som2: 48.5527, som3: 0.0021, som4: 13023.6842, som5: 9694.9317, complex1: 5, complex2: 0.1764, complex3: 18 } },
+            { nome: "Juruviara-boreal", audioSrc: "sound/Vireo_chivi-45078_denoise.wav", imageSrc: "imageB/Vireo_chivi.jpg", scientificName: "Vireo chivi", params: { tempo1: 7441.9047, tempo2: 394.3915, som1: 10272.8070, som2: 1015.1111, som3: 0.0008, som4: 10917.5438, som5: 8080.7017, complex1: 1, complex2: 1.0, complex3: 6 } },
+            { nome: "Avoante", audioSrc: "sound/Zenaida_auriculata-2175971.wav", imageSrc: "imageB/Zenaida_auriculata.jpeg", scientificName: "Zenaida auriculata", params: { tempo1: 3352.0634, tempo2: 518.6507, som1: 730.7017, som2: 425.8201, som3: 0.0011, som4: 730.7017, som5: 580.2631, complex1: 3, complex2: 0.0, complex3: 4 } },
+            { nome: "Tico-tico", audioSrc: "sound/Zonotrichia_capensis-59282_denoise.wav", imageSrc: "imageB/Zonotrichia_capensis.jpeg", scientificName: "Zonotrichia capensis", params: { tempo1: 1896.8253, tempo2: 317.9047, som1: 5716.6666, som2: 76.8253, som3: 0.0026, som4: 7779.8245, som5: 4066.1403, complex1: 4, complex2: 0.25, complex3: 5 } }
+        ];
+
+        // --- PRÉ-CARREGADOR DE ÁUDIO ---
+        const audioCache = {};
+        let audioAtual = null; 
+        let audioSrcAtualDoExplorer = null;
+
+        BANCO_DE_DADOS_PASSAROS.forEach(passaro => {
+            if (!audioCache[passaro.audioSrc]) {
+                const audio = new Audio(passaro.audioSrc);
+                audio.preload = 'auto';
+                audioCache[passaro.audioSrc] = audio;
+            }
+        });
+
+        function tocarSom(audioSrc) {
+            if (audioAtual && !audioAtual.paused) {
+                audioAtual.pause();
+                audioAtual.currentTime = 0;
+            }
+            const novoAudio = audioCache[audioSrc];
+            if (novoAudio) {
+                novoAudio.currentTime = 0;
+                novoAudio.play().catch(e => console.error("Erro ao tocar áudio:", e));
+                audioAtual = novoAudio;
+            }
+        }
+
+        const svgCache = {};
+        const svgCacheP2 = {};
+
+        // --- SELEÇÃO DE ELEMENTOS ---
+        const sliders = {};
+        const spans = {};
+        const params = [
+            'tempo1', 'tempo2', 'som1', 'som2', 'som3', 'som4', 'som5',
+            'complex1', 'complex2', 'complex3'
+        ];
+        
+        params.forEach(paramId => {
+            sliders[paramId] = document.getElementById(paramId);
+            spans[paramId] = document.getElementById('valor-' + paramId);
+        });
+        
+        const formaCentralRect = document.getElementById('forma-central-rect');
+        const circulos = [
+            document.getElementById('circulo-1'),
+            document.getElementById('circulo-2'),
+            document.getElementById('circulo-3')
+        ];
+        const p1Container = document.getElementById('p1-container');
+        const p2Container = document.getElementById('p2-container');
+
+        const explorerSelect = document.getElementById('explorer-select');
+        const infoPopupContainer = document.getElementById('info-popup-container');
+        const infoPopupImage = document.getElementById('info-popup-image');
+        const infoPopupName = document.getElementById('info-popup-name');
+        const infoPopupScientific = document.getElementById('info-popup-scientific');
+        const infoPopupPlayButton = document.getElementById('info-popup-play-button');
+        
+        // --- REGRAS DE VISUALIZAÇÃO ---
+        function getCirculoIndex(v){if(v<2793.65)return 1;if(v<5962.22)return 2;return 3}
+        function getCorIndexTempo2(v){if(v<119.3)return 0;if(v<193.61)return 1;if(v<285.65)return 2;if(v<317.96)return 3;if(v<392.86)return 4;if(v<469.36)return 5;if(v<772.85)return 6;return 7}
+        function getP1Tipo(v){return v<8403.07?"redonda":"pontuda"}
+        function getP1Tamanho(v){return v<116.84?"P":"G"}
+        function getP1Divisoes(v){return v<0.0025?4:8}
+        function getP1Indice(v){if(v<8467.54)return 3;if(v<11089.47)return 2;return 1}
+        function getP1CorIndex(v){if(v<3835.11)return 0;if(v<4817.45)return 1;if(v<5426.54)return 2;if(v<6000.94)return 3;if(v<7907.7)return 4;if(v<9569.33)return 5;if(v<10174.21)return 6;return 7}
+        function getP2Visibilidade(v){return v>=3}
+        function getP2Tamanho(v){return v>=5?"G":"P"}
+        function getP2Divisoes(v){return v<0.46?4:8}
+        function getP2CorIndex(v){if(v<3)return 0;if(v<4)return 1;if(v<5)return 2;if(v<6)return 3;if(v<7)return 4;if(v<11.25)return 5;if(v<16.88)return 6;return 7}
+
+        // --- FUNÇÕES DE LÓGICA ---
+        function mapSliderValue(sliderId, sliderValue, mapConfig) {
+            const config = mapConfig[sliderId];
+            if (!config) { return { mappedValue: sliderValue, displayText: sliderValue.toString() }; }
+            const { min, max, unit, decimals } = config;
+            const mappedValue = (sliderValue / 100) * (max - min) + min;
+            let displayText;
+            if (sliderValue == 0) { displayText = `< ${min} ${unit}`; } 
+            else if (sliderValue == 100) { displayText = `> ${max} ${unit}`; } 
+            else { displayText = mappedValue.toFixed(decimals) + ` ${unit}`; }
+            return { mappedValue, displayText };
+        }
+        
+        // --- FUNÇÕES DE ATUALIZAÇÃO DE SVG ---
+        async function atualizarPreenchimento1(mappedValues, corP1) {
+            if (!p1Container) return; 
+            const tipo = getP1Tipo(mappedValues.som1);
+            const tamanho = getP1Tamanho(mappedValues.som2);
+            const divisoes = getP1Divisoes(mappedValues.som3);
+            const indice = getP1Indice(mappedValues.som4);
+            const caminhoArquivo = `p1_formas/${tipo}${tamanho}${divisoes}.${indice}.svg`;
+            try {
+                let svgText;
+                if (svgCache[caminhoArquivo]) { svgText = svgCache[caminhoArquivo]; } 
+                else {
+                    const response = await fetch(caminhoArquivo);
+                    if (!response.ok) { throw new Error(`Arquivo SVG não encontrado: ${caminhoArquivo}`); }
+                    svgText = await response.text();
+                    svgCache[caminhoArquivo] = svgText;
+                }
+                p1Container.innerHTML = ''; 
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(svgText, "image/svg+xml");
+                const svgElement = doc.querySelector('svg');
+                if (svgElement) {
+                    Array.from(svgElement.children).forEach(node => {
+                        if (node.tagName.toLowerCase() === 'defs' || node.tagName.toLowerCase() === 'style') { return; }
+                        node.removeAttribute('class');
+                        node.setAttribute('fill', corP1);
+                        p1Container.appendChild(node.cloneNode(true));
+                    });
+                }
+            } catch (error) { console.error("Erro ao carregar SVG:", error); p1Container.innerHTML = ''; }
+        }
+
+        async function atualizarPreenchimento2(mappedValues, corP2) {
+            if (!p2Container) return; 
+            const ehVisivel = getP2Visibilidade(mappedValues.complex1);
+            if (!ehVisivel) { p2Container.innerHTML = ''; return; }
+            const tamanho = getP2Tamanho(mappedValues.complex1); 
+            const divisoes = getP2Divisoes(mappedValues.complex2);
+            const baseNome = (tamanho === "G") ? "grande" : "pequena";
+            const caminhoArquivo = `p2_formas/${baseNome}${divisoes}.svg`;
+            try {
+                let svgText;
+                if (svgCacheP2[caminhoArquivo]) { svgText = svgCacheP2[caminhoArquivo]; } 
+                else {
+                    const response = await fetch(caminhoArquivo);
+                    if (!response.ok) { throw new Error(`Arquivo SVG P2 não encontrado: ${caminhoArquivo}`); }
+                    svgText = await response.text();
+                    svgCacheP2[caminhoArquivo] = svgText;
+                }
+                p2Container.innerHTML = ''; 
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(svgText, "image/svg+xml");
+                const svgElement = doc.querySelector('svg');
+                if (svgElement) {
+                    Array.from(svgElement.children).forEach(node => {
+                        if (node.tagName.toLowerCase() === 'defs' || node.tagName.toLowerCase() === 'style') { return; }
+                        node.removeAttribute('class');
+                        node.setAttribute('fill', corP2); 
+                        p2Container.appendChild(node.cloneNode(true)); 
+                    });
+                }
+            } catch (error) { console.error("Erro ao carregar SVG P2:", error); p2Container.innerHTML = ''; }
+        }
+
+        // --- Funções do "Modo Explorador" ---
+        function valorRealParaSlider(valorReal, sliderId) {
+            const config = MAP_CONFIG[sliderId];
+            if (!config) { return 50; }
+            const valorSeguro = Math.max(config.min, Math.min(config.max, valorReal));
+            const sliderValue = ((valorSeguro - config.min) / (config.max - config.min)) * 100;
+            return sliderValue;
+        }
+
+        function snapSlidersToBird(passaro) {
+            if (!passaro || !passaro.params) return;
+            const params = passaro.params;
+            for (const paramId in params) {
+                if (sliders[paramId]) {
+                    const valorReal = params[paramId];
+                    const sliderValue = valorRealParaSlider(valorReal, paramId);
+                    sliders[paramId].value = sliderValue;
+                }
+            }
+            atualizarSVG();
+        }
+
+        function onExplorerChange() {
+            if (!explorerSelect) return; 
+            const selectedValue = explorerSelect.value;
+
+            if (selectedValue === "") {
+                infoPopupContainer.classList.add('hidden'); 
+                audioSrcAtualDoExplorer = null;
+                
+            } else {
+                const birdIndex = parseInt(selectedValue, 10);
+                const passaro = BANCO_DE_DADOS_PASSAROS[birdIndex];
+
+                if (passaro) {
+                    infoPopupImage.src = passaro.imageSrc;
+                    infoPopupName.textContent = passaro.nome;
+                    infoPopupScientific.textContent = passaro.scientificName;
+                    
+                    infoPopupContainer.classList.remove('hidden'); 
+                    
+                    audioSrcAtualDoExplorer = passaro.audioSrc; 
+                    
+                    snapSlidersToBird(passaro);
+                }
+            }
+        }
+        
+        function handleManualSliderInput() {
+            if (explorerSelect.value !== "") {
+                explorerSelect.value = "";
+                onExplorerChange();
+            }
+        }
+
+        // --- FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO ---
+        async function atualizarSVG() {
+            const mappedValues = {};
+            params.forEach(paramId => {
+                if (sliders[paramId] && MAP_CONFIG[paramId]) {
+                    const sliderValue = parseFloat(sliders[paramId].value);
+                    const result = mapSliderValue(paramId, sliderValue, MAP_CONFIG);
+                    mappedValues[paramId] = result.mappedValue;
+                    if (spans[paramId]) {
+                        spans[paramId].textContent = result.displayText;
+                    }
+                }
+            });
+
+            if (mappedValues.tempo1 !== undefined) {
+                const formaIndex = getCirculoIndex(mappedValues.tempo1);
+                circulos.forEach((c, index) => { c.classList.toggle('hidden', (index + 1) !== formaIndex); });
+            }
+            if (mappedValues.tempo2 !== undefined) {
+                const corIndex = getCorIndexTempo2(mappedValues.tempo2);
+                if (formaCentralRect) { formaCentralRect.setAttribute('fill', PALETA_CENTRAL[corIndex]); }
+            }
+            if (mappedValues.som1 !== undefined && mappedValues.som2 !== undefined && mappedValues.som3 !== undefined && mappedValues.som4 !== undefined && mappedValues.som5 !== undefined) {
+                const corIndexP1 = getP1CorIndex(mappedValues.som5);
+                await atualizarPreenchimento1(mappedValues, PALETA_P1[corIndexP1]);
+            }
+            if (mappedValues.complex1 !== undefined && mappedValues.complex2 !== undefined && mappedValues.complex3 !== undefined) {
+                const corIndexP2 = getP2CorIndex(mappedValues.complex3);
+                await atualizarPreenchimento2(mappedValues, PALETA_P2[corIndexP2]);
+            }
+        }
+
+        // --- INICIALIZAÇÃO ---
+        const allTriggers = document.querySelectorAll('.accordion-trigger');
+            
+        allTriggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const content = trigger.nextElementSibling; 
+                const arrow = trigger.querySelector('.accordion-arrow'); 
+                if (content && content.id.startsWith('content-')) {
+                    content.classList.toggle('hidden');
+                }
+                if (arrow) {
+                    arrow.classList.toggle('arrow-rotated');
+                }
+            });
+        });
+        
+        params.forEach(paramId => {
+            if (sliders[paramId]) {
+                sliders[paramId].addEventListener('input', atualizarSVG);
+                sliders[paramId].addEventListener('input', handleManualSliderInput);
+            }
+        });
+
+        // 1. Primeiro criamos as opções do menu
+        if (explorerSelect && BANCO_DE_DADOS_PASSAROS) {
+            BANCO_DE_DADOS_PASSAROS.forEach((passaro, index) => {
+                const option = document.createElement('option');
+                option.value = index; 
+                option.textContent = passaro.nome; 
+                explorerSelect.appendChild(option);
+            });
+            explorerSelect.addEventListener('change', onExplorerChange);
+        }
+
+        if (infoPopupPlayButton) {
+            infoPopupPlayButton.addEventListener('click', () => {
+                if (audioSrcAtualDoExplorer) {
+                    tocarSom(audioSrcAtualDoExplorer);
+                    infoPopupPlayButton.classList.remove('wobbling');
+                    void infoPopupPlayButton.offsetWidth; 
+                    infoPopupPlayButton.classList.add('wobbling');
+                    infoPopupPlayButton.addEventListener('animationend', () => {
+                        infoPopupPlayButton.classList.remove('wobbling');
+                    }, { once: true });
+                }
+            });
+        }
+
+        // 2. AGORA SIM: Verificamos se tem algo na URL e selecionamos
+        const urlParams = new URLSearchParams(window.location.search);
+        const birdId = urlParams.get('id');
+
+        if (birdId !== null && explorerSelect) {
+            if (birdId >= 0 && birdId < BANCO_DE_DADOS_PASSAROS.length) {
+                explorerSelect.value = birdId; 
+                onExplorerChange(); 
+            }
+        }
+        
+        // 3. Por fim, atualiza tudo
+        atualizarSVG();
+
+    });
+</script>
+
+</body>
+</html>

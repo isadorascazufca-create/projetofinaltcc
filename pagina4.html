@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCC - Informações (?)</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://use.typekit.net/sdm6dmo.css">
+    
+<style>
+        body {
+            font-family: "galix-mono", sans-serif; 
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="%23e76225"/></svg>'), auto;
+        }
+
+        /* ===== CURSOR DE LOSANGO PARA HOVER ===== */
+        .header-link:hover {
+             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
+        }
+
+    </style>
+</head>
+<body class="bg-white text-[#e76225]">
+
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2 lg:px-24 lg:pt-8 lg:pb-4 bg-white/90 backdrop-blur-sm lg:bg-transparent">
+        <nav class="container mx-auto grid grid-cols-2 items-center lg:flex lg:justify-between lg:items-baseline">
+    
+            <a href="pagina3.html" 
+               class="header-link flex flex-row items-center space-x-2 justify-self-start col-span-1 mt-0 transition-transform duration-300 hover:scale-105 origin-center lg:mt-0">
+                <p class="text-[15px] lg:text-2xl xl:text-2xl font-normal text-[#e76225] whitespace-nowrap">
+                   paisagens sonoras
+                </p>
+                <span class="text-[15px] lg:text-3xl xl:text-3xl font-normal cursor-pointer text-[#e76225] inline-block whitespace-nowrap lg:relative lg:top-0.5">
+                   +
+                </span>
+            </a>
+            
+            <a href="pagina2.html" 
+               class="header-link text-[15px] lg:text-2xl xl:text-2xl font-normal cursor-pointer text-[#e76225] inline-block transition-transform duration-300 hover:scale-105 origin-center whitespace-nowrap 
+                      justify-self-end col-span-1 mt-0 lg:mt-0">
+               como a forma se forma
+            </a>
+            
+        </nav>
+    </header>
+
+    <main class="container mx-auto pt-24 px-6 lg:px-12 lg:pt-32 pb-24">
+        <h1 class="text-4xl font-bold text-center">informações</h1>
+        
+        <div class="mt-8 text-center max-w-2xl mx-auto">
+            <p class="text-lg">Conteúdo da página de informações...</p>
+        </div>
+
+    </main>
+
+    <a href="pagina4.html"
+       class="header-link fixed z-50 bottom-8 right-8 w-10 h-10 text-xl lg:w-12 lg:h-12 lg:text-2xl bg-[#e76225] rounded-full flex items-center justify-center font-bold text-white transition-transform hover:scale-110">
+       ?
+    </a>
+
+</body>
+</html>

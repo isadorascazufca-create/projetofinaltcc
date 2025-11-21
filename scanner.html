@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AR - Leitura de Símbolos</title>
+    
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://use.typekit.net/sdm6dmo.css">
+
+    <style>
+      /* --- CSS GERAL --- */
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        font-family: "galix-mono", sans-serif;
+        background-color: transparent !important; 
+      }
+
+      a-scene {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      /* Força o vídeo da câmera para o fundo */
+      video {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        object-fit: cover !important;
+        z-index: -2 !important;
+        display: block !important;
+      }
+      
+      canvas {
+         width: 100% !important;
+         height: 100% !important;
+         max-width: none !important;
+         z-index: 1 !important;
+      }
+
+      #ar-popup {
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+
+      .btn-interativo:hover {
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div id="ui-top-instruction" 
+         class="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 
+                bg-white/30 backdrop-blur-sm px-6 py-2 rounded-full border border-white/40 shadow-sm pointer-events-none">
+        <p class="text-[#e76225] font-bold text-lg whitespace-nowrap animate-pulse">
+           aponte para uma forma
+        </p>
+    </div>
+
+    <a href="index.html" id="ui-bottom-button"
+       class="btn-interativo fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50
+              bg-white border-2 border-[#e76225] px-6 py-3 rounded-full shadow-lg
+              transition-transform hover:scale-105 active:scale-95 flex items-center justify-center text-center min-w-[250px]">
+        <span class="text-[#e76225] font-bold text-base lg:text-lg whitespace-nowrap">
+           veja a paisagem sonora completa
+        </span>
+    </a>
+
+    <a-scene 
+      id="scene"
+      mindar-image="imageTargetSrc: Teste RA/targets.mind; uiScanning: no;" 
+      color-space="sRGB" 
+      renderer="colorManagement: true, physicallyCorrectLights" 
+      vr-mode-ui="enabled: false" 
+      device-orientation-permission-ui="enabled: false">
+      
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      </a-scene>
+
+    <div id="ar-popup" 
+         class="fixed bottom-24 left-1/2 transform -translate-x-1/2 translate-y-10 opacity-0 pointer-events-none z-50 
+                flex items-center bg-white/90 backdrop-blur-md p-4 rounded-3xl border border-[#e76225]/30 shadow-xl min-w-[280px]">
+        
+        <div class="flex-shrink-0">
+            <img id="popup-img" src="" alt="Foto" class="w-16 h-16 rounded-full object-cover border-2 border-[#e76225]">
+        </div>
+        
+        <div class="ml-4">
+            <p id="popup-nome" class="font-bold text-lg text-[#e76225] whitespace-nowrap">Nome</p>
+            <p id="popup-cientifico" class="italic text-sm text-[#e76225]">Científico</p>
+            <p class="text-xs text-[#e76225] mt-1 font-bold">▶ tocando...</p>
+        </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- 1. BANCO DE DADOS COMPLETO (Baseado no seu index.html) ---
+        // A ordem aqui deve ser IGUAL à ordem que você colocou no compilador MindAR
+        const birdsData = [
+            { nome: "Papagaio-verdadeiro", cientifico: "Amazona aestiva", img: "imageB/amazona_aestiva.jpeg", audio: "sound/Amazona_aestiva-2578_denoise.wav" },
+            { nome: "Periquito-verde", cientifico: "Brotogeris tirica", img: "imageB/Brotogeris_tirica.jpeg", audio: "sound/Brotogeris_tirica-344085_denoise.wav" },
+            { nome: "Carcará", cientifico: "Carcara plancus", img: "imageB/Carcara_plancus.jpeg", audio: "sound/Caracara_plancus-302883_denoise.wav" },
+            { nome: "Pica-pau-de-cabeça-amarela", cientifico: "Celeus flavescens", img: "imageB/Celeus_flavescens.jpg", audio: "sound/Celeus_flavescens-37499_denoise.wav" },
+            { nome: "Cambacica", cientifico: "Coereba flaveola", img: "imageB/Coereba_flaveola.jpeg", audio: "sound/Coereba_flaveola-1004775_denoise.wav" },
+            { nome: "Rolinha-cinzenta", cientifico: "Columbina passerina", img: "imageB/Columbina_passerina.jpeg", audio: "sound/Columbina_passerina-1432770 (1)_denoise.wav" },
+            { nome: "Urubu-de-cabeça-preta", cientifico: "Coragyps atratus", img: "imageB/Coragyps_atratus.jpeg", audio: "sound/Coragyps_atratus-78686_denoise.wav" },
+            { nome: "Pitiguari", cientifico: "Cyclarhis gujanensis", img: "imageB/Cyclarhis_gujanensis.jpeg", audio: "sound/Cyclarhis_gujanensis-116709 (1)_denoise.wav" },
+            { nome: "Beija-flor-tesoura", cientifico: "Eupetomena macroura", img: "imageB/Eupetomena_macroura.jpg", audio: "sound/Eupetomena_macroura-2173635 (1)_denoise.wav" },
+            { nome: "Tuim", cientifico: "Forpus xanthopterygius", img: "imageB/Forpus_xanthopterygius.jpeg", audio: "sound/Forpus_xanthopterygius-7208_denoise.wav" },
+            { nome: "João-de-barro", cientifico: "Furnarius rufus", img: "imageB/Furnarius_rufus.jpeg", audio: "sound/Furnarius_rufus-2825424_denoise.wav" },
+            { nome: "Corujinha-do-mato", cientifico: "Megascops choliba", img: "imageB/Megascops_choliba.jpeg", audio: "sound/Megascops_choliba-579040_denoise.wav" },
+            { nome: "Bentevizinho", cientifico: "Myiozetetes similis", img: "imageB/Myiozetetes_similis.jpeg", audio: "sound/Myiozetetes_similis-2139493_denoise.wav" },
+            { nome: "Pardal-doméstico", cientifico: "Passer domesticus", img: "imageB/Passer_domesticus.jpeg", audio: "sound/Passer_domesticus-200351_denoise.wav" },
+            { nome: "Alma-de-gato", cientifico: "Piaya cayana", img: "imageB/Piaya_cayana.jpeg", audio: "sound/Piaya_cayana-190305_denoise.wav" },
+            { nome: "Bem-te-vi", cientifico: "Pitangus sulphuratus", img: "imageB/Pitangus_sulphuratus.jpg", audio: "sound/Pitangus_sulphuratus-2017090_denoise.wav" },
+            { nome: "Periquitão-maracanã", cientifico: "Psittacara leucophthalmus", img: "imageB/Psittacara_leucophthalmus.jpeg", audio: "sound/Psittacara_leucophthalmus-187809_denoise.wav" },
+            { nome: "Saíra-amarela", cientifico: "Stilpnia cayana", img: "imageB/Stilpnia_cayana.jpeg", audio: "sound/Stilpnia_cayana-86150_denoise.wav" },
+            { nome: "Sanhaçu-verde", cientifico: "Thraupis palmarum", img: "imageB/Thraupis_palmarum.jpeg", audio: "sound/Thraupis_palmarum-209744_denoise.wav" },
+            { nome: "Sanhaçu-cinzento", cientifico: "Thraupis sayaca", img: "imageB/Thraupis_sayaca.jpg", audio: "sound/Thraupis_sayaca-43298_denoise.wav" },
+            { nome: "Ferreirinho-relógio", cientifico: "Todirostrum cinereum", img: "imageB/Todirostrum_cinereum.jpeg", audio: "sound/Todirostrum_cinereum-45722 (1)_denoise.wav" },
+            { nome: "Corruíra", cientifico: "Troglodytes musculus", img: "imageB/Troglodytes_musculus.jpeg", audio: "sound/Troglodytes_musculus-48966_denoise.wav" },
+            { nome: "Sabiá-poca", cientifico: "Turdus amaurochalinus", img: "imageB/Turdus_amaurochalinus.jpg", audio: "sound/Turdus_amaurochalinus-49337_denoise.wav" },
+            { nome: "Sabiá-laranjeira", cientifico: "Turdus rufiventris", img: "imageB/Turdus_rufiventris.jpg", audio: "sound/Turdus_rufiventris-59269_denoise.wav" },
+            { nome: "Suiriri-tropical", cientifico: "Tyrannus melancholicus", img: "imageB/Tyrannus_melancholicus.jpeg", audio: "sound/Tyrannus_melancholicus-98693_denoise.wav" },
+            { nome: "Juruviara-boreal", cientifico: "Vireo chivi", img: "imageB/Vireo_chivi.jpg", audio: "sound/Vireo_chivi-45078_denoise.wav" },
+            { nome: "Avoante", cientifico: "Zenaida auriculata", img: "imageB/Zenaida_auriculata.jpeg", audio: "sound/Zenaida_auriculata-2175971.wav" },
+            { nome: "Tico-tico", cientifico: "Zonotrichia capensis", img: "imageB/Zonotrichia_capensis.jpeg", audio: "sound/Zonotrichia_capensis-59282_denoise.wav" }
+        ];
+
+        // Seleção de Elementos da Interface
+        const scene = document.querySelector('#scene');
+        const popup = document.querySelector('#ar-popup');
+        const popupImg = document.querySelector('#popup-img');
+        const popupNome = document.querySelector('#popup-nome');
+        const popupCientifico = document.querySelector('#popup-cientifico');
+        const topInstruction = document.querySelector('#ui-top-instruction');
+
+        let currentAudio = null;
+
+        // --- 2. LOOP MÁGICO: CRIAR ALVOS AUTOMATICAMENTE ---
+        birdsData.forEach((bird, index) => {
+            
+            // Cria o elemento <a-entity> para cada pássaro
+            const entity = document.createElement('a-entity');
+            entity.setAttribute('mindar-image-target', `targetIndex: ${index}`);
+            
+            // Adiciona o feedback visual (anel pulsante)
+            const ring = document.createElement('a-ring');
+            ring.setAttribute('color', '#e76225');
+            ring.setAttribute('radius-inner', '0.5');
+            ring.setAttribute('radius-outer', '0.55');
+            ring.setAttribute('opacity', '0.8');
+            ring.setAttribute('animation', 'property: scale; to: 1.2 1.2 1.2; dir: alternate; loop: true; dur: 1000');
+            
+            entity.appendChild(ring);
+            scene.appendChild(entity);
+
+            // --- 3. EVENTOS DE DETECÇÃO ---
+            
+            // Quando encontrar...
+            entity.addEventListener("targetFound", event => {
+                console.log(`Encontrou: ${bird.nome}`);
+                
+                // Atualiza Popup
+                popupImg.src = bird.img;
+                popupNome.textContent = bird.nome;
+                popupCientifico.textContent = bird.cientifico;
+                
+                // Mostra Popup / Esconde Instrução
+                popup.classList.remove('opacity-0', 'translate-y-10');
+                topInstruction.classList.add('opacity-0');
+
+                // Toca Áudio
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio = null;
+                }
+                currentAudio = new Audio(bird.audio);
+                currentAudio.play().catch(e => console.log("Erro play:", e));
+            });
+
+            // Quando perder...
+            entity.addEventListener("targetLost", event => {
+                console.log(`Perdeu: ${bird.nome}`);
+                
+                // Esconde Popup / Mostra Instrução
+                popup.classList.add('opacity-0', 'translate-y-10');
+                topInstruction.classList.remove('opacity-0');
+
+                // Pausa Áudio
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio = null;
+                }
+            });
+        });
+
+      });
+    </script>
+
+  </body>
+</html>

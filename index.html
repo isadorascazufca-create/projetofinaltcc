@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCC - Paisagem Sonora</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://use.typekit.net/sdm6dmo.css">
+    
+ <style>
+        body {
+            font-family: "galix-mono", sans-serif; 
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="%23e76225"/></svg>'), auto;
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+        }
+
+        .wobbling {
+            animation: wobble 0.3s ease-in-out;
+        }
+
+        /* 'pointer-events-none' faz o popup ser "fantasma" */
+        #hoverPopup {
+            pointer-events: none;
+            transform: translateY(-50%);
+            transition: top 0.05s ease-out, left 0.05s ease-out, opacity 0.2s ease; /* Adicionei transição de opacidade */
+            z-index: 100; 
+        }
+
+        .clickable-image:hover {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
+        }
+        
+        .header-link:hover {
+             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
+        }
+
+    </style>
+</head>
+<body class="bg-white text-[#e76225]">
+
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2 lg:px-24 lg:pt-8 lg:pb-4 bg-transparent lg:bg-transparent">
+        <nav class="container mx-auto grid grid-cols-2 items-center 
+                lg:flex lg:justify-between lg:items-baseline">
+            
+            <a href="pagina3.html" 
+               class="header-link flex flex-row items-center space-x-2 justify-self-start col-span-1 mt-0 
+                      transition-transform duration-300 hover:scale-105 origin-center 
+                      lg:order-1 lg:mt-0">
+                
+                <p class="text-[15px] lg:text-2xl xl:text-2xl font-normal text-[#e76225] whitespace-nowrap">
+                   paisagens sonoras
+                </p>
+                
+                <span class="text-sm lg:text-3xl xl:text-3xl font-normal cursor-pointer text-[#e76225] inline-block whitespace-nowrap lg:relative lg:top-0.5">
+                   +
+                </span>
+            </a>
+
+            <a href="pagina2.html" 
+               class="header-link text-[15px] lg:text-2xl xl:text-2xl font-normal cursor-pointer text-[#e76225] inline-block transition-transform duration-300 hover:scale-105 origin-center whitespace-nowrap 
+                      justify-self-end col-span-1 mt-0 lg:order-3 lg:mt-0">
+               como a forma se forma
+            </a>
+
+            <a href="index.html" 
+               class="header-link text-[15px] lg:text-2xl xl:text-2xl font-bold cursor-pointer text-[#e76225] inline-block scale-105 
+                      col-span-2 text-center justify-self-center mt-2 lg:order-2 lg:mt-0">
+               parque augusta
+            </a>
+            
+        </nav>
+    </header>
+
+    <main class="container mx-auto pt-32 px-6 lg:px-12 pb-24">
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 lg:gap-y-24 lg:gap-x-24">
+            
+            <div class="image-card flex flex-col">
+                    <img src="image/Amazona_aestiva.svg" 
+                         alt="Papagaio-verdadeiro"
+                         class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer">
+                </div>
+    
+                <div class="image-card flex flex-col">
+                    <img src="image/Brotogeris_tirica.svg" 
+                         alt="Brotogeris tirica"
+                         class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer">
+                </div>
+    
+                <div class="image-card flex flex-col">
+                    <img src="image/Caracara_plancus.svg" 
+                         alt="Caracara plancus"
+                         class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer">
+                </div>
+
+                <div class="image-card flex flex-col">
+                    <img src="image/Celeus_flavescens.svg" 
+                         alt="Celeus flavescens"
+                         class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer">
+                </div>
+    
+                <div class="image-card flex flex-col"> <img src="image/Coereba_flaveola.svg" alt="Descrição da Imagem 5" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Columbina_passerina.svg" alt="Descrição da Imagem 6" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Coragyps_atratus.svg" alt="Descrição da Imagem 7" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Cyclarhis_gujanensis.svg" alt="Descrição da Imagem 8" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Eupetomena_macroura.svg" alt="Descrição da Imagem 9" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Forpus_xanthopterygius.svg" alt="Descrição da Imagem 10" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Furnarius_rufus.svg" alt="Descrição da Imagem 11" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Megascops_choliba.svg" alt="Descrição da Imagem 12" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Myiozetetes_similis.svg" alt="Descrição da Imagem 13" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Passer_domesticus.svg" alt="Descrição da Imagem 14" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Piaya_cayana.svg" alt="Descrição da Imagem 15" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Pitangus_sulphuratus.svg" alt="Descrição da Imagem 16" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Psittacara_leucophthalmus.svg" alt="Descrição da Imagem 17" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Stilpnia_cayana.svg" alt="Descrição da Imagem 18" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Thraupis_palmarum.svg" alt="Descrição da Imagem 19" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Thraupis_sayaca.svg" alt="Descrição da Imagem 20" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Todirostrum_cinereum.svg" alt="Descrição da Imagem 21" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Troglodytes_musculus.svg" alt="Descrição da Imagem 22" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Turdus_amaurochalinus.svg" alt="Descrição da Imagem 23" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Turdus_rufiventris.svg" alt="Descrição da Imagem 24" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Tyrannus_melancholicus.svg" alt="Descrição da Imagem 25" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Vireo_chivi.svg" alt="Descrição da Imagem 26" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> <img src="image/Zenaida_auriculata.svg" alt="Descrição da Imagem 27" class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer"> </div>
+                <div class="image-card flex flex-col"> 
+                    <img src="image/Zonotrichia_capensis.svg" 
+                         alt="Descrição da Imagem 28" 
+                         class="clickable-image w-full h-auto aspect-square object-cover rounded-lg cursor-pointer">  
+                </div>
+            </div>
+    </main>
+
+    <div id="hoverPopup" 
+     class="hidden fixed z-50 flex items-center bg-white/20 backdrop-blur-sm p-3 rounded-3xl border border-white/20">
+        <div>
+            <img id="hoverPopupImage" src="" alt="Imagem do popup" class="w-16 h-16 rounded-full object-cover border-2 border-gray-100">
+        </div>
+        <div class="ml-3">
+            <p id="hoverPopupText1" class="font-bold text-base text-[#e76225] whitespace-nowrap"></p>
+            <p id="hoverPopupText2" class="italic text-sm text-[#e76225] whitespace-nodewrap"></p>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Listas de Dados (Mantidas iguais) ---
+            const audioFiles = [
+                "sound/Amazona_aestiva-2578_denoise.wav",       
+                "sound/Brotogeris_tirica-344085_denoise.wav",    
+                "sound/Caracara_plancus-302883_denoise.wav",    
+                "sound/Celeus_flavescens-37499_denoise.wav",    
+                "sound/Coereba_flaveola-1004775_denoise.wav",    
+                "sound/Columbina_passerina-1432770 (1)_denoise.wav", 
+                "sound/Coragyps_atratus-78686_denoise.wav",      
+                "sound/Cyclarhis_gujanensis-116709 (1)_denoise.wav", 
+                "sound/Eupetomena_macroura-2173635 (1)_denoise.wav", 
+                "sound/Forpus_xanthopterygius-7208_denoise.wav", 
+                "sound/Furnarius_rufus-2825424_denoise.wav",     
+                "sound/Megascops_choliba-579040_denoise.wav",   
+                "sound/Myiozetetes_similis-2139493_denoise.wav", 
+                "sound/Passer_domesticus-200351_denoise.wav",   
+                "sound/Piaya_cayana-190305_denoise.wav",        
+                "sound/Pitangus_sulphuratus-2017090_denoise.wav", 
+                "sound/Psittacara_leucophthalmus-187809_denoise.wav", 
+                "sound/Stilpnia_cayana-86150_denoise.wav",      
+                "sound/Thraupis_palmarum-209744_denoise.wav",    
+                "sound/Thraupis_sayaca-43298_denoise.wav",      
+                "sound/Todirostrum_cinereum-45722 (1)_denoise.wav", 
+                "sound/Troglodytes_musculus-48966_denoise.wav", 
+                "sound/Turdus_amaurochalinus-49337_denoise.wav", 
+                "sound/Turdus_rufiventris-59269_denoise.wav",   
+                "sound/Tyrannus_melancholicus-98693_denoise.wav", 
+                "sound/Vireo_chivi-45078_denoise.wav",          
+                "sound/Zenaida_auriculata-2175971.wav",    
+                "sound/Zonotrichia_capensis-59282_denoise.wav" 
+            ];
+            const popupImages = [
+                "imageB/amazona_aestiva.jpeg",  
+                "imageB/Brotogeris_tirica.jpeg",  
+                "imageB/Carcara_plancus.jpeg",  
+                "imageB/Celeus_flavescens.jpg",
+                "imageB/Coereba_flaveola.jpeg",
+                "imageB/Columbina_passerina.jpeg",
+                "imageB/Coragyps_atratus.jpeg",
+                "imageB/Cyclarhis_gujanensis.jpeg",
+                "imageB/Eupetomena_macroura.jpg",
+                "imageB/Forpus_xanthopterygius.jpeg",
+                "imageB/Furnarius_rufus.jpeg",
+                "imageB/Megascops_choliba.jpeg",
+                "imageB/Myiozetetes_similis.jpeg",
+                "imageB/Passer_domesticus.jpeg",
+                "imageB/Piaya_cayana.jpeg",
+                "imageB/Pitangus_sulphuratus.jpg",
+                "imageB/Psittacara_leucophthalmus.jpeg",
+                "imageB/Stilpnia_cayana.jpeg",
+                "imageB/Thraupis_palmarum.jpeg",
+                "imageB/Thraupis_sayaca.jpg",
+                "imageB/Todirostrum_cinereum.jpeg",
+                "imageB/Troglodytes_musculus.jpeg",
+                "imageB/Turdus_amaurochalinus.jpg",
+                "imageB/Turdus_rufiventris.jpg",
+                "imageB/Tyrannus_melancholicus.jpeg",
+                "imageB/Vireo_chivi.jpg",
+                "imageB/Zenaida_auriculata.jpeg",
+                "imageB/Zonotrichia_capensis.jpeg"
+            ];
+            const popupTextNomes = [
+                "Papagaio-verdadeiro", "Periquito-verde", "Carcará", "Pica-pau-de-cabeça-amarela",
+                "Cambacica", "Rolinha-cinzenta", "Urubu-de-cabeça-preta", "Pitiguari",
+                "Beija-flor-tesoura", "Tuim", "João-de-barro", "Corujinha-do-mato",
+                "Bentevizinho-de-penacho-vermelho", "Pardal-doméstico", "Alma-de-gato", "Bem-te-vi",
+                "Periquitão-maracanã", "Saíra-amarela", "Sanhaçu-verde", "Sanhaçu-cinzento",
+                "Ferreirinho-relógio", "Corruíra", "Sabiá-poca", "Sabiá-laranjeira",
+                "Suiriri-tropical", "Juruviara-boreal", "Avoante", "Tico-tico"
+            ];
+            const popupTextCientificos = [
+                "Amazona aestiva", "Brotogeris tirica", "Carcara plancus", "Celeus flavescens",
+                "Coereba flaveola", "Columbina passerina", "Coragyps atratus", "Cyclarhis gujanensis",
+                "Eupetomena macroura", "Forpus_xanthopterygius", "Furnarius rufus", "Megascops choliba",
+                "Myiozetetes similis", "Passer domesticus", "Piaya cayana", "Pitangus sulphuratus",
+                "Psittacara leucophthalmus", "Stilpnia cayana", "Thraupis palmarum", "Thraupis sayaca",
+                "Todirostrum cinereum", "Troglodytes musculus", "Turdus amaurochalinus", "Turdus rufiventris",
+                "Tyrannus melancholicus", "Vireo chivi", "Zenaida auriculata", "Zonotrichia capensis"
+            ];
+            const audioObjects = audioFiles.map(src => {
+                const audio = new Audio(src);
+                audio.preload = 'auto';
+                return audio;
+            });
+
+            const images = document.querySelectorAll('.clickable-image');
+            const hoverPopup = document.getElementById('hoverPopup');
+            const hoverPopupImage = document.getElementById('hoverPopupImage');
+            const hoverPopupText1 = document.getElementById('hoverPopupText1');
+            const hoverPopupText2 = document.getElementById('hoverPopupText2');
+
+            function onMouseMove(event) {
+                if (!hoverPopup) return;
+
+                const popupWidth = hoverPopup.offsetWidth;
+                const popupHeight = hoverPopup.offsetHeight;
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+                
+                const mouseX = event.clientX;
+                const mouseY = event.clientY;
+                const gap = 20;
+
+                let targetLeft;
+                const spaceRight = windowWidth - mouseX; 
+                
+                if (spaceRight > popupWidth + gap) {
+                    targetLeft = mouseX + gap;
+                } else {
+                    targetLeft = mouseX - popupWidth - gap;
+                }
+
+                let targetTop = mouseY;
+                if (targetTop - (popupHeight / 2) < gap) {
+                    targetTop = (popupHeight / 2) + gap;
+                } 
+                else if (targetTop + (popupHeight / 2) > windowHeight - gap) {
+                    targetTop = windowHeight - (popupHeight / 2) - gap;
+                }
+                
+                hoverPopup.style.left = `${targetLeft}px`; 
+                hoverPopup.style.top = `${targetTop}px`;
+            }
+
+            // ===== FUNÇÃO PARA FORÇAR O FECHAMENTO DO POPUP =====
+            const hidePopup = () => {
+                if (hoverPopup && !hoverPopup.classList.contains('hidden')) {
+                    hoverPopup.classList.add('hidden');
+                    document.removeEventListener('mousemove', onMouseMove);
+                }
+            };
+
+            // ===== NOVA REGRA: FECHAR AO SCROLLAR A TELA =====
+            window.addEventListener('scroll', () => {
+                hidePopup();
+            }, { passive: true }); // 'passive' melhora performance no scroll mobile
+
+            // ===== NOVA REGRA: FECHAR AO TOCAR EM QUALQUER LUGAR FORA DO CARD =====
+            window.addEventListener('touchstart', (e) => {
+                // Se o toque NÃO foi em uma imagem clicável, fecha o popup
+                if (!e.target.classList.contains('clickable-image')) {
+                    hidePopup();
+                }
+            });
+
+
+            images.forEach((image, index) => {
+                
+                const audio = audioObjects[index];
+                const popupSrc = popupImages[index];
+                const text1 = popupTextNomes[index];
+                const text2 = popupTextCientificos[index];
+
+                // --- HOVER/TOUCH START ---
+                image.addEventListener('mouseenter', () => {
+                    if (hoverPopup && popupSrc && text1 && text2) {
+                        hoverPopupImage.src = popupSrc;
+                        hoverPopupText1.textContent = text1;
+                        hoverPopupText2.textContent = text2;
+                        hoverPopup.classList.remove('hidden');
+                        document.addEventListener('mousemove', onMouseMove);
+                    }
+                });
+
+                // --- HOVER LEAVE ---
+                image.addEventListener('mouseleave', () => {
+                    hidePopup(); // Agora usamos a função centralizada
+                });
+
+
+                // --- CLICK (SOM + ANIMAÇÃO) ---
+                image.addEventListener('click', (e) => {
+                    // No mobile, o primeiro toque pode ser 'hover', então garantimos que o popup abra
+                    // caso o 'mouseenter' não tenha disparado ou tenha fechado rápido
+                    if (hoverPopup.classList.contains('hidden')) {
+                         if (hoverPopup && popupSrc && text1 && text2) {
+                            hoverPopupImage.src = popupSrc;
+                            hoverPopupText1.textContent = text1;
+                            hoverPopupText2.textContent = text2;
+                            hoverPopup.classList.remove('hidden');
+                            // Posiciona o popup perto do toque se possível (fallback simples)
+                            // Nota: clientX/Y vem do evento de click
+                        }
+                    }
+
+                    if (audio) {
+                        audio.currentTime = 0; 
+                        audio.play().catch(e => console.error("Erro ao tocar áudio:", e));
+                    }
+                    image.classList.remove('wobbling');
+                    void image.offsetWidth; 
+                    image.classList.add('wobbling');
+                    image.addEventListener('animationend', () => {
+                        image.classList.remove('wobbling');
+                    }, { once: true });
+                    
+                    // Impede que o click na imagem feche o popup imediatamente via 'touchstart' global
+                    e.stopPropagation(); 
+                });
+            });
+
+        });
+    </script>
+
+    <a href="pagina4.html"
+       class="header-link fixed z-50 bottom-8 right-8 w-10 h-10 text-xl lg:w-12 lg:h-12 lg:text-2xl bg-white border-2 border-[#e76225] rounded-full flex items-center justify-center font-bold text-[#e76225] transition-transform hover:scale-110">
+       ?
+    </a>
+
+</body>
+</html>
