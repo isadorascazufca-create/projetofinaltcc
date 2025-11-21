@@ -73,7 +73,7 @@
        class="btn-interativo fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50
               bg-white border-2 border-[#e76225] px-6 py-3 rounded-full shadow-lg
               transition-transform hover:scale-105 active:scale-95 flex items-center justify-center text-center min-w-[250px]">
-        <span class="text-[#e76225] font-bold text-base lg:text-lg whitespace-nowrap">
+        <span class="text-[#e76225] font-medium text-base lg:text-lg whitespace-nowrap">
            veja a paisagem sonora completa
         </span>
     </a>
@@ -92,14 +92,12 @@
 
     <div id="ar-popup" 
          class="fixed bottom-24 left-1/2 transform -translate-x-1/2 translate-y-10 opacity-0 pointer-events-none z-50 
-                flex items-center bg-white/90 backdrop-blur-md p-4 rounded-3xl border border-[#e76225]/30 shadow-xl min-w-[280px]">
-        
-        <div class="flex-shrink-0">
+                flex items-center bg-white/90 backdrop-blur-md p-4 rounded-3xl border border-[#e76225]/30 shadow-xl 
+                min-w-[280px] max-w-[90vw]"> <div class="flex-shrink-0">
             <img id="popup-img" src="" alt="Foto" class="w-16 h-16 rounded-full object-cover border-2 border-[#e76225]">
         </div>
         
-        <div class="ml-4">
-            <p id="popup-nome" class="font-bold text-lg text-[#e76225] whitespace-nowrap">Nome</p>
+        <div class="ml-4 flex-1"> <p id="popup-nome" class="font-bold text-lg text-[#e76225] leading-tight">Nome</p>
             <p id="popup-cientifico" class="italic text-sm text-[#e76225]">Científico</p>
             <p class="text-xs text-[#e76225] mt-1 font-bold">▶ tocando...</p>
         </div>
