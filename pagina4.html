@@ -8,22 +8,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://use.typekit.net/sdm6dmo.css">
     
-<style>
+    <style>
         body {
             font-family: "galix-mono", sans-serif; 
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="%23e76225"/></svg>'), auto;
         }
 
-        /* ===== CURSOR DE LOSANGO PARA HOVER ===== */
         .header-link:hover {
              cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
         }
 
+        /* Ajuste para o texto ficar justificado e bonito de ler */
+        p { text-align: justify; }
+        @media (max-width: 768px) { p { text-align: left; } }
     </style>
 </head>
 <body class="bg-white text-[#e76225]">
 
-    <header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2 lg:px-24 lg:pt-8 lg:pb-4 bg-white/90 backdrop-blur-sm lg:bg-transparent">
+    <header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2 lg:px-24 lg:pt-8 lg:pb-4 lg:bg-transparent">
         <nav class="container mx-auto grid grid-cols-2 items-center lg:flex lg:justify-between lg:items-baseline">
     
             <a href="pagina3.html" 
@@ -45,13 +47,109 @@
         </nav>
     </header>
 
-    <main class="container mx-auto pt-24 px-6 lg:px-12 lg:pt-32 pb-24">
-        <h1 class="text-4xl font-bold text-center">informações</h1>
+    <main class="container mx-auto pt-32 px-6 lg:px-12 pb-32 flex justify-center">
         
-        <div class="mt-8 text-center max-w-2xl mx-auto">
-            <p class="text-lg">Conteúdo da página de informações...</p>
-        </div>
+        <div class="max-w-3xl w-full space-y-16">
 
+            <section>
+                <h2 class="text-2xl lg:text-3xl font-bold mb-6">habitar também é escutar</h2>
+                <p class="text-base lg:text-lg leading-relaxed">
+                    Habitar a cidade vai muito além de ocupar seus espaços físicos; é criar vínculos, memórias e intimidade com o lugar. O Parque Augusta é um refúgio de biodiversidade no centro de São Paulo, e sua identidade é feita para além de árvores e caminhos, de uma <strong>paisagem sonora</strong> viva e pulsante.
+                </p>
+                <p class="text-base lg:text-lg leading-relaxed mt-4">
+                    Este projeto nasce do desejo de fortalecer esse senso de pertencimento. Escutar atentamente a <strong>biofonia</strong> — os sons da vida, com recorte dos cantos das aves — é uma forma profunda de se conectar com a natureza urbana. Ao revelarmos a camada invisível do som, convidamos você a perceber o parque como um ecossistema complexo do qual também fazemos parte.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl lg:text-3xl font-bold mb-6">os cantos dos pássaros</h2>
+                <p class="text-base lg:text-lg leading-relaxed">
+                    As vocalizações das aves são uma estrutura de comunicação sofisticada. Cada vocalização é formada por múltiplas camadas estruturais, que se organizam hierarquicamente em elementos, sílabas, frases, chamadas e canções.
+                </p>
+                <p class="text-base lg:text-lg leading-relaxed mt-4">
+                    Para o desenvolvimento desse projeto, foi necessário o entendimento da <strong>bioacústica</strong> para compreender essa complexidade. O canto obedece a uma hierarquia precisa, quase como uma linguagem:
+                </p>
+                <ul class="list-disc list-inside mt-4 space-y-2 text-base lg:text-lg ml-4 marker:text-[#e76225]">
+                    <li><strong>O Elemento:</strong> A nota indivisível, a menor partícula do som.</li>
+                    <li><strong>A Sílaba:</strong> O agrupamento de elementos que forma a base da vocalização da ave.</li>
+                    <li><strong>A Frase:</strong> A sequência rítmica e a repetição das sílabas, que criam a melodia.</li>
+                </ul>
+                <p class="text-base lg:text-lg leading-relaxed mt-4">
+                    Ao decodificar a organização biológica de cada vocalização, a biofonia foi transformada em identidade gráfica, materializando a riqueza singular que cada espécie aporta ao espaço e a diversidade dessa dimensão do lugar.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl lg:text-3xl font-bold mb-6">como a forma se forma</h2>
+                <p class="text-base lg:text-lg leading-relaxed">
+                    Para traduzir essa riqueza sonora em imagem, foi desenvolvido um <strong>sistema gráfico paramétrico</strong>. Aqui, a forma possui relação direta dos dados do som. A forma reage organicamente às características biológicas de cada vocalização:
+                </p>
+                <ul class="list-none mt-6 space-y-6 text-base lg:text-lg">
+                    <li class="flex items-start gap-4">
+                        <div class="mt-1.5 w-3 h-3 rounded-full bg-[#e76225] flex-shrink-0"></div>
+                        <div>
+                            <strong class="block text-xl mb-1">O Círculo (O Som)</strong>
+                            É o corpo do canto. Se o som é agudo, o círculo se fragmenta e ganha pontas. Se é grave, ele permanece fluido e arredondado.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="mt-1.5 w-3 h-3 rotate-45 bg-[#e76225] flex-shrink-0"></div>
+                        <div>
+                            <strong class="block text-xl mb-1">O Losango (O Tempo)</strong>
+                            Representa a duração. Ele se expande e preenche o espaço conforme o tempo que a vocalização ocupa.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="mt-1.5 w-3 h-3 bg-[#e76225] flex-shrink-0"></div>
+                        <div>
+                            <strong class="block text-xl mb-1">O Quadrado (A Complexidade)</strong>
+                            Representa a riqueza da composição. Quanto maior a variedade de sílabas diferentes que o pássaro possui em sua vocalização, mais complexa se torna a estrutura quadrada.
+                        </div>
+                    </li>
+                </ul>
+                <p class="text-base lg:text-lg leading-relaxed mt-6">
+                    O uso de cores complementares maximiza o contraste e a clareza do sistema, ao passo que a lógica de temperatura cromática serve como guia para interpretar as variações dos dados sonoros.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl lg:text-3xl font-bold mb-6">navegando pelo projeto</h2>
+                <p class="text-base lg:text-lg leading-relaxed mb-4">
+                    Esta plataforma é um arquivo dessa desenvolvimento:
+                </p>
+                <ul class="space-y-3 text-base lg:text-lg">
+                    <li>
+                        <span class="font-bold text-[#e76225]">→ Galeria (Parque Augusta):</span> Explore as 28 vocalizações mapeadas e descubra suas formas.
+                    </li>
+                    <li>
+                        <span class="font-bold text-[#e76225]">→ Laboratório:</span> Acesse <em>"Como a forma se forma"</em> para manipular os parâmetros e ver, na prática, a matemática por trás da forma.
+                    </li>
+                    <li>
+                        <span class="font-bold text-[#e76225]">→ No Espaço:</span> Utilize a câmera (acessada pela paisagem sonora do Parque Augsta) para escanear as formas presentes no projeto. Através da Realidade Aumentada, a figura volta a ser som, completando o ciclo da percepção.
+                    </li>
+                </ul>
+            </section>
+
+            <section class="border-t-2 border-[#e76225] pt-8 mt-12">
+                <h2 class="text-xl lg:text-2xl font-bold mb-6 text-left">ficha técnica</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-base lg:text-lg">
+                    <div>
+                        <p class="font-bold mb-1 text-left">Autoria</p>
+                        <p class="text-left">Isadora Scazufca</p>
+                    </div>
+                    <div>
+                        <p class="font-bold mb-1 text-left">Orientação</p>
+                        <p class="text-left">Edison Barone, Fabio Righetto, Jose Correa e Polise Moreira</p>
+                    </div>
+                    <div>
+                        <p class="font-bold mb-1 text-left">Dados</p>
+                        <p class="text-left">WikiAves e Guia de Aves da Prefeitura de SP</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
     </main>
 
     <a href="pagina4.html"
