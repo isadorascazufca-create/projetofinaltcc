@@ -57,15 +57,35 @@
       .btn-interativo:hover {
         cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect x="5" y="5" width="10" height="10" fill="%23e76225" transform="rotate(45 10 10)"/></svg>'), auto;
       }
+
+      /* CSS DA TELA DE INÍCIO (CORREÇÃO IOS) */
+      #start-screen {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(255, 255, 255, 0.95);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Alinhado no topo com espaçamento (justify-start + padding-top no HTML) */
+        justify-content: flex-start; 
+        transition: opacity 0.5s ease;
+      }
     </style>
   </head>
   <body>
     
+    <div id="start-screen" class="pt-64">
+        <button id="btn-start-experience" 
+           class="btn-interativo bg-[#e76225] text-white font-bold py-3 px-12 rounded-full text-xl shadow-lg transform transition hover:scale-105 active:scale-95">
+           começar
+        </button>
+    </div>
     <div id="ui-top-instruction" 
          class="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 
-                bg-white/30 backdrop-blur-sm px-6 py-2 rounded-full border border-white/40 shadow-sm pointer-events-none">
+                bg-white/30 backdrop-blur-sm px-6 py-2 rounded-full border border-white/40 shadow-sm pointer-events-none opacity-0 transition-opacity duration-300">
         <p class="text-[#e76225] font-bold text-lg whitespace-nowrap animate-pulse">
-           aponte para uma forma
+           aponte e escute a forma
         </p>
     </div>
 
@@ -80,7 +100,7 @@
 
     <a-scene 
       id="scene"
-      mindar-image="imageTargetSrc: Teste RA/targets.mind; uiScanning: no;" 
+      mindar-image="imageTargetSrc: Teste RA/targets.mind; uiScanning: no; startOnLoad: false;" 
       color-space="sRGB" 
       renderer="colorManagement: true, physicallyCorrectLights" 
       vr-mode-ui="enabled: false" 
@@ -93,11 +113,13 @@
     <div id="ar-popup" 
          class="fixed bottom-24 left-1/2 transform -translate-x-1/2 translate-y-10 opacity-0 pointer-events-none z-50 
                 flex items-center bg-white/90 backdrop-blur-md p-4 rounded-3xl border border-[#e76225]/30 shadow-xl 
-                min-w-[280px] max-w-[90vw]"> <div class="flex-shrink-0">
+                min-w-[280px] max-w-[90vw]"> 
+        <div class="flex-shrink-0">
             <img id="popup-img" src="" alt="Foto" class="w-16 h-16 rounded-full object-cover border-2 border-[#e76225]">
         </div>
         
-        <div class="ml-4 flex-1"> <p id="popup-nome" class="font-bold text-lg text-[#e76225] leading-tight">Nome</p>
+        <div class="ml-4 flex-1"> 
+            <p id="popup-nome" class="font-bold text-lg text-[#e76225] leading-tight">Nome</p>
             <p id="popup-cientifico" class="italic text-sm text-[#e76225]">Científico</p>
             <p class="text-xs text-[#e76225] mt-1 font-bold">▶ tocando...</p>
         </div>
@@ -106,8 +128,6 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         
-        // --- 1. BANCO DE DADOS COMPLETO (Baseado no seu index.html) ---
-        // A ordem aqui deve ser IGUAL à ordem que você colocou no compilador MindAR
         const birdsData = [
             { nome: "Papagaio-verdadeiro", cientifico: "Amazona aestiva", img: "imageB/amazona_aestiva.jpeg", audio: "sound/Amazona_aestiva-2578_denoise.wav" },
             { nome: "Periquito-verde", cientifico: "Brotogeris tirica", img: "imageB/Brotogeris_tirica.jpeg", audio: "sound/Brotogeris_tirica-344085_denoise.wav" },
@@ -139,24 +159,64 @@
             { nome: "Tico-tico", cientifico: "Zonotrichia capensis", img: "imageB/Zonotrichia_capensis.jpeg", audio: "sound/Zonotrichia_capensis-59282_denoise.wav" }
         ];
 
-        // Seleção de Elementos da Interface
+        // Seleção de Elementos
         const scene = document.querySelector('#scene');
         const popup = document.querySelector('#ar-popup');
         const popupImg = document.querySelector('#popup-img');
         const popupNome = document.querySelector('#popup-nome');
         const popupCientifico = document.querySelector('#popup-cientifico');
         const topInstruction = document.querySelector('#ui-top-instruction');
+        
+        // Elementos da Tela de Início
+        const startScreen = document.querySelector('#start-screen');
+        const btnStart = document.querySelector('#btn-start-experience');
 
         let currentAudio = null;
 
-        // --- 2. LOOP MÁGICO: CRIAR ALVOS AUTOMATICAMENTE ---
+        // --- FUNÇÃO PARA DESBLOQUEAR ÁUDIO NO IOS ---
+        function unlockAudio() {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) {
+                const ctx = new AudioContext();
+                const oscillator = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                gainNode.gain.value = 0; 
+                oscillator.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                oscillator.start(0);
+                oscillator.stop(0.001); 
+            }
+            
+            const dummyAudio = new Audio();
+            dummyAudio.play().then(() => {
+                dummyAudio.pause();
+            }).catch((e) => {
+                console.log("Audio unlock tentativa:", e);
+            });
+        }
+
+        // --- EVENTO DE CLIQUE NO BOTÃO INICIAR ---
+        btnStart.addEventListener('click', () => {
+            // 1. Desbloqueia o áudio
+            unlockAudio();
+            
+            // 2. Esconde a tela de início
+            startScreen.classList.add('opacity-0', 'pointer-events-none');
+            
+            // 3. Mostra a instrução do topo
+            topInstruction.classList.remove('opacity-0');
+            
+            // 4. Inicia o MindAR
+            scene.systems['mindar-image-system'].start();
+        });
+
+
+        // --- LOOP DE CRIAÇÃO DOS ALVOS ---
         birdsData.forEach((bird, index) => {
             
-            // Cria o elemento <a-entity> para cada pássaro
             const entity = document.createElement('a-entity');
             entity.setAttribute('mindar-image-target', `targetIndex: ${index}`);
             
-            // Adiciona o feedback visual (anel pulsante)
             const ring = document.createElement('a-ring');
             ring.setAttribute('color', '#e76225');
             ring.setAttribute('radius-inner', '0.5');
@@ -167,39 +227,35 @@
             entity.appendChild(ring);
             scene.appendChild(entity);
 
-            // --- 3. EVENTOS DE DETECÇÃO ---
-            
-            // Quando encontrar...
+            // --- DETECÇÃO ---
             entity.addEventListener("targetFound", event => {
                 console.log(`Encontrou: ${bird.nome}`);
                 
-                // Atualiza Popup
                 popupImg.src = bird.img;
                 popupNome.textContent = bird.nome;
                 popupCientifico.textContent = bird.cientifico;
                 
-                // Mostra Popup / Esconde Instrução
                 popup.classList.remove('opacity-0', 'translate-y-10');
                 topInstruction.classList.add('opacity-0');
 
-                // Toca Áudio
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio = null;
                 }
+                
+                // Tocar áudio
                 currentAudio = new Audio(bird.audio);
-                currentAudio.play().catch(e => console.log("Erro play:", e));
+                currentAudio.play().catch(e => {
+                    console.log("Erro play (iOS block?):", e);
+                });
             });
 
-            // Quando perder...
             entity.addEventListener("targetLost", event => {
                 console.log(`Perdeu: ${bird.nome}`);
                 
-                // Esconde Popup / Mostra Instrução
                 popup.classList.add('opacity-0', 'translate-y-10');
                 topInstruction.classList.remove('opacity-0');
 
-                // Pausa Áudio
                 if (currentAudio) {
                     currentAudio.pause();
                     currentAudio = null;

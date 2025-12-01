@@ -49,7 +49,7 @@
             background: #e76225;
             border-radius: 50%;
             cursor: pointer;
-            margin-top: -1,5px; 
+            margin-top: -1.5px; 
         }
 
         input[type="range"]::-moz-range-thumb {
@@ -107,30 +107,28 @@
 </head>
 <body class="bg-white text-[#e76225]">
 
-<header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2 lg:px-24 lg:pt-8 lg:pb-4">
-    <nav class="container mx-auto grid grid-cols-2 items-center 
-                lg:flex lg:justify-between lg:items-baseline">
+<header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2 lg:px-24 lg:pt-8 lg:pb-4 backdrop-blur-sm bg-white/60">
+    <nav class="container mx-auto grid grid-cols-2 items-center lg:flex lg:justify-between lg:items-baseline">
     
         <a href="pagina3.html" 
-           class="header-link flex flex-row items-center space-x-2 justify-self-start col-span-1 mt-0 
-                  transition-transform duration-300 hover:scale-105 origin-center lg:mt-0">
+           class="header-link flex flex-row items-center space-x-2 justify-self-start col-span-1 mt-0 transition-transform duration-300 hover:scale-105 origin-center lg:mt-0">
             
-            <p class="text-[14px] lg:text-2xl xl:text-2xl font-normal text-[#e76225] whitespace-nowrap">
-               paisagens sonoras
+            <p class="text-base lg:text-2xl xl:text-2xl font-normal text-[#e76225] lg:whitespace-nowrap leading-tight">
+               paisagens <br class="lg:hidden"> sonoras
             </p>
-            <span class="text-[14px] lg:text-3xl xl:text-3xl font-normal cursor-pointer text-[#e76225] inline-block whitespace-nowrap lg:relative lg:top-0.5">
+            <span class="text-base lg:text-3xl xl:text-3xl font-normal cursor-pointer text-[#e76225] inline-block whitespace-nowrap lg:relative lg:top-0.5">
                +
             </span>
         </a>
             
         <a href="pagina2.html" 
-           class="header-link text-[14px] lg:text-2xl xl:text-2xl font-bold cursor-pointer text-[#e76225] inline-block scale-105 origin-center whitespace-nowrap 
-                  justify-self-end col-span-1 mt-0 lg:mt-0">
-           como a forma se forma
+           class="header-link text-base lg:text-2xl xl:text-2xl font-bold cursor-pointer text-[#e76225] inline-block scale-105 origin-center lg:whitespace-nowrap justify-self-end col-span-1 mt-0 lg:mt-0 text-right leading-tight">
+           como a forma <br class="lg:hidden"> se forma
         </a>
 
     </nav>
 </header>
+
 <main class="flex flex-col-reverse lg:flex-row-reverse pt-20 lg:pt-32 relative h-screen lg:h-[calc(100vh-128px)]">
     
     <div id="control-panel" class="w-full h-1/2 lg:w-1/4 lg:h-full overflow-y-auto p-6 pb-16 lg:mr-14">
@@ -146,20 +144,20 @@
      class="hidden flex items-center p-3 mt-4 mb-6 w-full border-2 border-gray-200 rounded-lg 
             lg:fixed lg:z-40 lg:bottom-12 lg:left-16 lg:right-auto lg:w-auto lg:mt-0 lg:mb-0 lg:border-none lg:rounded-none">
     
-    <div class="flex-shrink-0">
-        <img id="info-popup-image" src="" alt="Imagem do pássaro" class="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-gray-100">
-    </div>
-    
-    <div class="ml-3 flex-1 min-w-0">
-        <p id="info-popup-play-button" class="font-normal text-xl lg:text-2xl text-[#e76225] select-none">
-            ▶
-        </p>
-        <p id="info-popup-name" class="font-bold text-base lg:text-base text-[#e76225]">
-            </p>
-        <p id="info-popup-scientific" class="italic text-sm lg:text-sm text-[#e76225]">
-            </p>
-    </div>
-</div>
+            <div class="flex-shrink-0">
+                <img id="info-popup-image" src="" alt="Imagem do pássaro" class="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-gray-100">
+            </div>
+            
+            <div class="ml-3 flex-1 min-w-0">
+                <p id="info-popup-play-button" class="font-normal text-xl lg:text-2xl text-[#e76225] select-none">
+                    ▶
+                </p>
+                <p id="info-popup-name" class="font-bold text-base lg:text-base text-[#e76225]">
+                </p>
+                <p id="info-popup-scientific" class="italic text-sm lg:text-sm text-[#e76225]">
+                </p>
+            </div>
+        </div>
 
         <h3 class="text-lg lg:text-xl font-medium mb-4 text-[#e76225]">tempo</h3>
         
