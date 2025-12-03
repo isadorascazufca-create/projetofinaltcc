@@ -10,7 +10,6 @@
     
 <style>
         body {
-            /* Fonte "galix-mono" */
             font-family: "galix-mono", sans-serif; 
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><circle cx="10" cy="10" r="8" fill="%23e76225"/></svg>'), auto;
         }
@@ -102,6 +101,11 @@
         .arrow-rotated {
             transform: rotate(180deg);
         }
+        
+        /* NOVO: Cursor para a imagem clicável */
+        #info-popup-image {
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -109,10 +113,8 @@
 
 <header class="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2 lg:px-24 lg:pt-8 lg:pb-4 backdrop-blur-sm bg-white/60">
     <nav class="container mx-auto grid grid-cols-2 items-center lg:flex lg:justify-between lg:items-baseline">
-    
         <a href="pagina3.html" 
            class="header-link flex flex-row items-center space-x-2 justify-self-start col-span-1 mt-0 transition-transform duration-300 hover:scale-105 origin-center lg:mt-0">
-            
             <p class="text-base lg:text-2xl xl:text-2xl font-normal text-[#e76225] lg:whitespace-nowrap leading-tight">
                paisagens <br class="lg:hidden"> sonoras
             </p>
@@ -120,15 +122,16 @@
                +
             </span>
         </a>
-            
         <a href="pagina2.html" 
            class="header-link text-base lg:text-2xl xl:text-2xl font-bold cursor-pointer text-[#e76225] inline-block scale-105 origin-center lg:whitespace-nowrap justify-self-end col-span-1 mt-0 lg:mt-0 text-right leading-tight">
            como a forma <br class="lg:hidden"> se forma
         </a>
-
     </nav>
 </header>
 
+<div id="image-modal" class="fixed inset-0 z-[60] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-8 cursor-pointer">
+    <img id="image-modal-content" src="" alt="Imagem Ampliada" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-transform duration-300 scale-95">
+</div>
 <main class="flex flex-col-reverse lg:flex-row-reverse pt-20 lg:pt-32 relative h-screen lg:h-[calc(100vh-128px)]">
     
     <div id="control-panel" class="w-full h-1/2 lg:w-1/4 lg:h-full overflow-y-auto p-6 pb-16 lg:mr-14">
@@ -145,7 +148,7 @@
             lg:fixed lg:z-40 lg:bottom-12 lg:left-16 lg:right-auto lg:w-auto lg:mt-0 lg:mb-0 lg:border-none lg:rounded-none">
     
             <div class="flex-shrink-0">
-                <img id="info-popup-image" src="" alt="Imagem do pássaro" class="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-gray-100">
+                <img id="info-popup-image" src="" alt="Imagem do pássaro" class="w-16 h-16 lg:w-20 lg:h-20 rounded-full object-cover border-2 border-gray-100 transition-transform hover:scale-105">
             </div>
             
             <div class="ml-3 flex-1 min-w-0">
@@ -158,9 +161,8 @@
                 </p>
             </div>
         </div>
-
-        <h3 class="text-lg lg:text-xl font-medium mb-4 text-[#e76225]">tempo</h3>
         
+        <h3 class="text-lg lg:text-xl font-medium mb-4 text-[#e76225]">tempo</h3>
         <div class="mb-6">
             <div id="trigger-tempo1" class="flex items-center justify-between cursor-pointer select-none accordion-trigger">
                 <label for="tempo1" class="text-[16px] lg:text-base font-normal text-[#e76225]">duração total</label>
@@ -289,22 +291,15 @@
     </div> 
     
     <div id="svg-container" class="w-full h-1/2 lg:w-3/4 lg:h-full p-8 flex items-center justify-center lg:mt-8 mb-4 lg:mb-0" style="isolation: isolate;">
-
         <svg id="svg-principal" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 363.51 363.51" class="w-3/4 h-auto lg:w-1/2">
-
           <path id="circulo-1" class="hidden" d="M182.11,288.22l-106.81-106.81,106.11-106.11,106.81,106.81-106.11,106.11ZM181.76,323.49l141.73-141.73L181.76,40.03,40.03,181.76l141.73,141.73Z" fill="#ffe9b3"/>
           <path id="circulo-2" class="hidden" d="M182.57,253.31l-72.36-72.36,70.74-70.74,72.36,72.36-70.74,70.74h0ZM181.76,323.49l141.73-141.73L181.76,40.03,40.03,181.76l141.73,141.73Z" fill="#ffe9b3"/>
           <rect id="circulo-3" x="81.54" y="81.54" width="200.44" height="200.44" transform="translate(-75.29 181.76) rotate(-45)" fill="#ffe9b3"/>
-
           <g id="p1-container" style="mix-blend-mode: multiply;"></g>
           <g id="p2-container" style="mix-blend-mode: multiply;"></g>
-
           <rect id="forma-central-rect" x="145.93" y="145.93" width="71.65" height="71.65" transform="translate(-75.29 181.76) rotate(-45)" fill="#e6b00f"/>
-
         </svg>
-
     </div>
-
 </main>
 
 
@@ -316,12 +311,12 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         
-        // --- PALETAS E CONSTANTES ---
+        // --- PALETAS E CONSTANTES (MANTIDAS) ---
         const PALETA_CENTRAL = ["#e6b00f","#ffc20e","#ffde2f","#ffeb96","#ccc9e3","#9893c6","#766fb3","#544ba0"];
         const PALETA_P1 = ["#ff5003","#fd7702","#ff8e00","#ffa881","#67b3e2","#4c8cc5","#4361bb","#1a2270"];
         const PALETA_P2 = ["#e25296","#e8739e","#eba1b1","#f1c4d6","#c8e899","#b1ce6f","#89a559","#647c43"];
 
-        // --- MAPEAMENTO DE SLIDERS ---
+        // --- MAPEAMENTO DE SLIDERS (MANTIDO) ---
         const MAP_CONFIG = {
             'tempo1': { min: 197, max: 13645, unit: '(ms)', decimals: 0 },
             'tempo2': { min: 49, max: 1680, unit: '(ms)', decimals: 0 },
@@ -335,7 +330,7 @@
             'complex3': { min: 2, max: 44, unit: '(sílabas)', decimals: 0 }
         };
         
-        // --- BANCO DE DADOS ---
+        // --- BANCO DE DADOS (MANTIDO) ---
         const BANCO_DE_DADOS_PASSAROS = [
             { nome: "Papagaio-verdadeiro", audioSrc: "sound/Amazona_aestiva-2578_denoise.wav", imageSrc: "imageB/amazona_aestiva.jpeg", scientificName: "Amazona aestiva", params: { tempo1: 2954.0, tempo2: 307.9270, som1: 6035.0877, som2: 70.0833, som3: 0.0027, som4: 6970.7602, som5: 4953.2163, complex1: 3, complex2: 0.4285, complex3: 8 } },
             { nome: "Periquito-verde", audioSrc: "sound/Brotogeris_tirica-344085_denoise.wav", imageSrc: "imageB/Brotogeris_tirica.jpeg", scientificName: "Brotogeris tirica", params: { tempo1: 1360.0, tempo2: 303.5714, som1: 7221.0526, som2: 48.5714, som3: 0.0029, som4: 8467.5438, som5: 5523.2456, complex1: 4, complex2: 0.0, complex3: 4 } },
@@ -425,7 +420,11 @@
         const infoPopupScientific = document.getElementById('info-popup-scientific');
         const infoPopupPlayButton = document.getElementById('info-popup-play-button');
         
-        // --- REGRAS DE VISUALIZAÇÃO ---
+        // NOVO: Seleção dos elementos do modal
+        const imageModal = document.getElementById('image-modal');
+        const imageModalContent = document.getElementById('image-modal-content');
+        
+        // --- REGRAS DE VISUALIZAÇÃO (MANTIDAS) ---
         function getCirculoIndex(v){if(v<2793.65)return 1;if(v<5962.22)return 2;return 3}
         function getCorIndexTempo2(v){if(v<119.3)return 0;if(v<193.61)return 1;if(v<285.65)return 2;if(v<317.96)return 3;if(v<392.86)return 4;if(v<469.36)return 5;if(v<772.85)return 6;return 7}
         function getP1Tipo(v){return v<8403.07?"redonda":"pontuda"}
@@ -438,7 +437,7 @@
         function getP2Divisoes(v){return v<0.46?4:8}
         function getP2CorIndex(v){if(v<3)return 0;if(v<4)return 1;if(v<5)return 2;if(v<6)return 3;if(v<7)return 4;if(v<11.25)return 5;if(v<16.88)return 6;return 7}
 
-        // --- FUNÇÕES DE LÓGICA ---
+        // --- FUNÇÕES DE LÓGICA (MANTIDAS) ---
         function mapSliderValue(sliderId, sliderValue, mapConfig) {
             const config = mapConfig[sliderId];
             if (!config) { return { mappedValue: sliderValue, displayText: sliderValue.toString() }; }
@@ -451,7 +450,7 @@
             return { mappedValue, displayText };
         }
         
-        // --- FUNÇÕES DE ATUALIZAÇÃO DE SVG ---
+        // --- FUNÇÕES DE ATUALIZAÇÃO DE SVG (MANTIDAS) ---
         async function atualizarPreenchimento1(mappedValues, corP1) {
             if (!p1Container) return; 
             const tipo = getP1Tipo(mappedValues.som1);
@@ -515,7 +514,7 @@
             } catch (error) { console.error("Erro ao carregar SVG P2:", error); p2Container.innerHTML = ''; }
         }
 
-        // --- Funções do "Modo Explorador" ---
+        // --- Funções do "Modo Explorador" (MANTIDAS) ---
         function valorRealParaSlider(valorReal, sliderId) {
             const config = MAP_CONFIG[sliderId];
             if (!config) { return 50; }
@@ -570,7 +569,7 @@
             }
         }
 
-        // --- FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO ---
+        // --- FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO (MANTIDA) ---
         async function atualizarSVG() {
             const mappedValues = {};
             params.forEach(paramId => {
@@ -647,6 +646,51 @@
                         infoPopupPlayButton.classList.remove('wobbling');
                     }, { once: true });
                 }
+            });
+        }
+        
+        // --- NOVO: LÓGICA DO MODAL DE IMAGEM ---
+        
+        // Função para abrir o modal
+        function openImageModal(imageSrc) {
+            if (imageModal && imageModalContent) {
+                imageModalContent.src = imageSrc;
+                imageModal.classList.remove('hidden');
+                // Pequeno delay para a animação de escala funcionar
+                setTimeout(() => {
+                    imageModalContent.classList.remove('scale-95');
+                    imageModalContent.classList.add('scale-100');
+                }, 10);
+            }
+        }
+
+        // Função para fechar o modal
+        function closeImageModal() {
+            if (imageModal && imageModalContent) {
+                imageModalContent.classList.remove('scale-100');
+                imageModalContent.classList.add('scale-95');
+                // Espera a animação terminar antes de esconder
+                setTimeout(() => {
+                    imageModal.classList.add('hidden');
+                    imageModalContent.src = ''; // Limpa a imagem
+                }, 300);
+            }
+        }
+
+        // Evento de clique na imagem pequena do popup
+        if (infoPopupImage) {
+            infoPopupImage.addEventListener('click', () => {
+                const currentSrc = infoPopupImage.src;
+                if (currentSrc) {
+                    openImageModal(currentSrc);
+                }
+            });
+        }
+
+        // Evento de clique no modal para fechar
+        if (imageModal) {
+            imageModal.addEventListener('click', () => {
+                closeImageModal();
             });
         }
 
